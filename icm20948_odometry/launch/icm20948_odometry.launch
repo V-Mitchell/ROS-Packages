@@ -1,0 +1,6 @@
+<launch>
+
+<node name="icm20948_odometry" pkg="icm20948_odometry" type="icm20948_odometry" respawn="false" output="screen">
+</node>
+
+</launch>
