@@ -1,6 +1,6 @@
 /*  Author: Victor M
 *   Email: victorcmitchell@gmail.com
-*   Notes:  - 
+*   Notes:  - Reads data from icm20948 IMU, then publishes to ros topic
 */
 
 #include <chrono>
@@ -46,9 +46,10 @@ int main (int argc, char* argv[]) {
 
     imuInit(&enMotionSensorType);
 	if(IMU_EN_SENSOR_TYPE_ICM20948 == enMotionSensorType) {
-        ROS_INFO("Motion sersor is ICM-20948");
+        ROS_INFO("Motion sensor is ICM-20948");
 	} else {
         ROS_INFO("Motion sersor NULL");
+        return 0;
 	}
 
     uint32_t seq_id = 0;
@@ -60,7 +61,6 @@ int main (int argc, char* argv[]) {
         calculateOdometry(pose, twist, &stAngles, &stGyroRawData, &stAccelRawData, &stMagnRawData);
 
         nav_msgs::Odometry msg;
-        msg.header.frame_id = "camera_frame";
         msg.header.seq = seq_id;
         msg.header.stamp = ros::Time::now();
         msg.child_frame_id = "camera_frame";
